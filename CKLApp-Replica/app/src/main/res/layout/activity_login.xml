@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.challenge.cklapp_replica.LoginActivity">
+
+    <ImageView
+        android:layout_width="260dp"
+        android:layout_height="106dp"
+        android:layout_marginTop="114dp"
+        android:layout_gravity="center"
+        android:id="@+id/login_cklLogo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="47dp"
+        android:layout_marginBottom="0dp"
+        android:textSize="12sp"
+        android:text="@string/email" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/login_logo"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="5dp" />
+
+    <EditText
+        android:id="@+id/edit_login"
+        android:layout_width="248dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-light"
+        android:maxLines="1"
+        android:background="@null"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/arroba_ckl_io"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="47dp"
+        android:layout_marginBottom="0dp"
+        android:textSize="12sp"
+        android:text="@string/password" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/password_logo"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="5dp" />
+
+        <EditText
+            android:id="@+id/edit_password"
+            android:layout_width="248dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
+            android:maxLines="1"
+            android:inputType="textPassword"
+            android:background="@null"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"/>
+    
+    <Button
+        android:id="@+id/sign_in_button"
+        android:layout_width="320dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/signin"
+        android:background="@drawable/round_corner_button"
+        android:layout_gravity="center"/>
+
+
+</LinearLayout>
