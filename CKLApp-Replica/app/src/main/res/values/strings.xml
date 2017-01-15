@@ -4,4 +4,8 @@
     <string name="arroba_ckl_io">\@ckl.io</string>
     <string name="password">Password</string>
     <string name="signin">Sign In</string>
+    <string name="forgot_pass">Forgot your password?</string>
+    <string name="wrong_login">Error, wrong login</string>
+    <string name="wrong_pass">Error, wrong password</string>
+    <string name="no_user_registered">No users registered</string>
 </resources>

@@ -54,13 +54,26 @@
         android:text="@string/arroba_ckl_io"/>
     </LinearLayout>
 
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <View
+        android:id="@+id/login_underline"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:layout_marginLeft="17dp"
         android:layout_marginRight="20dp"
         android:background="@color/white"/>
 
+    <TextView android:id="@+id/login_error_text"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:textColor="@color/warm_purple"
+        android:textSize="10sp"
+        android:fontFamily="sans-serif"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -97,14 +110,30 @@
 
     </LinearLayout>
 
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <View
+        android:id="@+id/password_underline"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:layout_marginTop="2dp"
         android:layout_marginLeft="17dp"
         android:layout_marginRight="20dp"
         android:background="@color/white"/>
-    
+
+    <TextView android:id="@+id/password_error_text"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:textColor="@color/warm_purple"
+        android:textSize="10sp"
+        android:fontFamily="sans-serif"/>
+
+    </LinearLayout>
+
+
     <Button
         android:id="@+id/sign_in_button"
         android:layout_width="320dp"
@@ -114,5 +143,13 @@
         android:background="@drawable/round_corner_button"
         android:layout_gravity="center"/>
 
+    <Button
+        android:id="@+id/forgot_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="@string/forgot_pass"
+        android:background="@null"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

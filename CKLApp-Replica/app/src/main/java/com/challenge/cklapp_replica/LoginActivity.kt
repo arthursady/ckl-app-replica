@@ -1,14 +1,9 @@
 package com.challenge.cklapp_replica
 
-import android.content.res.Configuration
+
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.ViewManager
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_login.view.*
-import kotlinx.android.synthetic.main.main_login.*
+import io.realm.Realm
 
 
 class LoginActivity : AppCompatActivity() {
@@ -18,11 +13,27 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_login)
+
+        Realm.init(this)
+        var realm : Realm = Realm.getDefaultInstance()
+
+
+        if(!(realm.where(User::class.java).findAll().size>0)){
+            var admin : User= User()
+            admin.setLogin("Jones")
+            admin.setPassword("12345678")
+            realm.beginTransaction()
+            realm.copyToRealmOrUpdate(admin)
+            realm.commitTransaction()
+        }
+
         loginFragment = LoginFragment().newInstance()
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.login_view,loginFragment,"login_fragment")
                 .commit()
+
+        realm.close()
     }
 
 }

@@ -3,14 +3,15 @@ package com.challenge.cklapp_replica
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-
+import android.widget.Toast
+import io.realm.Realm
 
 
 /**
@@ -59,9 +60,40 @@ class LoginFragment : Fragment() {
         }
 
         loginView.sign_in_button.setOnClickListener {
+            val realm : Realm = Realm.getDefaultInstance()
+            val dbUsers = realm.where(User::class.java).findAll()
+            if(dbUsers.size>0){
+                if (realm.where(User::class.java).equalTo("login",
+                        loginView.edit_login.text.toString()).findFirst() == null) {
 
-            Toast.makeText(context, loginView.edit_login.text,
-                    Toast.LENGTH_SHORT).show()
+                    loginView.login_underline.setBackgroundColor(ContextCompat
+                            .getColor(context, R.color.warm_purple))
+                        loginView.login_error_text.text=resources.getString(R.string.wrong_login)
+                }
+                else {
+
+
+                    if(realm.where(User::class.java).equalTo("login", loginView.edit_login.text
+                            .toString()).findFirst().getPassword()
+                            .equals(loginView.edit_password.text.toString())){
+
+                        Toast.makeText(activity, "QUE BUGADO", Toast.LENGTH_LONG)
+                                .show()
+                        //login
+                    }
+                    else{
+                        loginView.password_underline.setBackgroundColor(ContextCompat
+                                .getColor(context, R.color.warm_purple))
+                        loginView.password_error_text.text=resources.getString(R.string.wrong_pass)
+                    }
+
+                }
+            }
+            else{
+                loginView.login_error_text.text=resources.getString(R.string.no_user_registered)
+                loginView.login_underline.setBackgroundColor(ContextCompat
+                        .getColor(context, R.color.warm_purple))
+            }
         }
 
         return loginView
@@ -69,13 +101,13 @@ class LoginFragment : Fragment() {
 
     fun checkSignInStatus(loginView:View){
         if(!(loginView.edit_login.text.isEmpty())&& !(loginView.edit_password.text.isEmpty())) {
-            loginView.sign_in_button.background = resources
-                    .getDrawable(R.drawable.round_corner_button)
+            loginView.sign_in_button.background = ContextCompat
+                    .getDrawable(activity,R.drawable.round_corner_button)
             loginView.sign_in_button.isEnabled = true
         }
         else{
-            loginView.sign_in_button.background = resources
-                    .getDrawable(R.drawable.round_corner_button_midblue)
+            loginView.sign_in_button.background = ContextCompat
+                    .getDrawable(activity,R.drawable.round_corner_button_midblue)
             loginView.sign_in_button.isEnabled = false
         }
     }
