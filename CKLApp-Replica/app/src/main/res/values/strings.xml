@@ -8,4 +8,5 @@
     <string name="wrong_login">Error, wrong login</string>
     <string name="wrong_pass">Error, wrong password</string>
     <string name="no_user_registered">No users registered</string>
+    <string name="title_activity_groceries">GroceriesActivity</string>
 </resources>
