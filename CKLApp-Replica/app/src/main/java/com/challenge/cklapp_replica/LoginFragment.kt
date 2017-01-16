@@ -78,9 +78,6 @@ class LoginFragment : Fragment() {
                             .toString()).findFirst().getPassword()
                             .equals(loginView.edit_password.text.toString())){
 
-                        Toast.makeText(activity, "QUE BUGADO", Toast.LENGTH_LONG)
-                                .show()
-
                         val intent = Intent(activity, GroceriesActivity::class.java)
                         startActivity(intent)
 

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import kotlinx.android.synthetic.main.list_element.view.*
 import java.util.*
 
@@ -33,7 +34,12 @@ class GroceryListAdapter() : RecyclerView.Adapter<GroceryListAdapter.ViewHolder>
         /*Set the data inside the views of the list fragment*/
         fun setData(item:Item){
             itemView.name.text=item.getName()
+//            itemView.list_element_menu.setOnClickListener {
+//                Toast.makeText(mContext, "QUE BUGADO", Toast.LENGTH_LONG)
+//                        .show()
+//            }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
@@ -52,10 +58,10 @@ class GroceryListAdapter() : RecyclerView.Adapter<GroceryListAdapter.ViewHolder>
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         holder?.setData(mGroceryList[position])
 
-        /*holder?.itemView?.setOnClickListener {
-            mListener.onArticleClicked(mArticleList[holder.adapterPosition])
+        holder?.itemView?.list_element_menu?.setOnClickListener { v->
+            mListener.onElementMenuClicked(mGroceryList[holder.adapterPosition],v,mContext)
         }
-
+        /*
         holder?.itemView?.setOnLongClickListener{ v ->
             mListener.onArticleSelected(mArticleList[holder.adapterPosition], v, mContext)
             true
@@ -78,7 +84,7 @@ class GroceryListAdapter() : RecyclerView.Adapter<GroceryListAdapter.ViewHolder>
 
 
     interface Interface {
-        fun onArticleClicked(item: Item)
+        fun onElementMenuClicked(item: Item,view: View,context: Context)
         fun onArticleSelected(item: Item,view: View,context: Context)
     }
 }

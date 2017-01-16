@@ -9,6 +9,9 @@
     <string name="wrong_pass">Error, wrong password</string>
     <string name="no_user_registered">No users registered</string>
     <string name="title_activity_groceries">GroceriesActivity</string>
+    <string name="change_to_buy">Change to Buy</string>
+    <string name="change_to_purchased">Change to Purchased</string>
+    <string name="remove_item">Remove Item</string>
 
     <string-array name="Items">
         <item>Apple</item>

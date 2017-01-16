@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.challenge.androidchallenge.MainActivity"
+    android:title="Popup_Menu">
+
+    <item
+        android:id="@+id/change_to_buy"
+        android:title="@string/change_to_buy"/>
+    <item
+        android:id="@+id/change_to_purchased"
+        android:title="@string/change_to_purchased"/>
+    <item
+        android:id="@+id/remove_item"
+        android:title="@string/remove_item"/>
+
+</menu >

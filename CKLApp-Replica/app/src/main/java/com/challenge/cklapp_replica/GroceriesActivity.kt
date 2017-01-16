@@ -14,6 +14,8 @@ import java.util.*
 
 class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface {
 
+    lateinit var mListFragment : GroceryListFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_groceries)
@@ -43,16 +45,9 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface {
 
         }
 
-
-
         var dbList = ArrayList<Item>()
         dbList.addAll(realm.where(Item::class.java).findAll()
                 .subList(0,realm.where(Item::class.java).findAll().size))
-
-        realm.beginTransaction()
-        dbList[0].setState(true)
-        realm.copyToRealmOrUpdate(dbList[0])
-        realm.commitTransaction()
 
         showListFragment(dbList)
         realm.close()
@@ -60,7 +55,7 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface {
 
 
     fun showListFragment(items: ArrayList<Item>){
-        val mListFragment = GroceryListFragment().newInstance(items)
+        mListFragment = GroceryListFragment().newInstance(items)
         supportFragmentManager
             .beginTransaction()
             .add(R.id.content_groceries,mListFragment,"groceryList")
@@ -69,8 +64,46 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface {
     }
 
     /*Implements the onClick method of the ArticleAdapter interface*/
-    override fun onArticleClicked(item: Item) {
+    override fun onElementMenuClicked(item: Item,view: View, context: Context) {
+        var popup = PopupMenu(context, view)
+        popup.menuInflater.inflate(R.menu.list_menu_popup,popup.menu)
+        popup.show()
 
+        var realm = Realm.getDefaultInstance()
+
+
+
+        popup.setOnMenuItemClickListener { i  ->
+            when(i.itemId){
+                R.id.change_to_buy -> {
+                    Toast.makeText(context, "You clicked: "+i.title, Toast.LENGTH_SHORT ).show()
+                    realm.beginTransaction()
+                    item.setState(false)
+                    realm.commitTransaction()
+                }
+
+
+                R.id.change_to_purchased -> {
+                    Toast.makeText(context, "You clicked: "+i.title, Toast.LENGTH_SHORT ).show()
+                    realm.beginTransaction()
+                    item.setState(true)
+                    realm.commitTransaction()
+                }
+
+                R.id.remove_item -> {
+                    Toast.makeText(context, "You clicked: "+i.title, Toast.LENGTH_SHORT ).show()
+                }
+            }
+
+            supportFragmentManager.beginTransaction().detach(mListFragment).commit()
+            supportFragmentManager.beginTransaction().attach(mListFragment).commit()
+
+            true
+        }
+
+
+
+        realm.close()
     }
 
     /*Implements the Long click listener from the ArticleAdapter interface*/
