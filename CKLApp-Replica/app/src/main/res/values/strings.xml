@@ -9,4 +9,21 @@
     <string name="wrong_pass">Error, wrong password</string>
     <string name="no_user_registered">No users registered</string>
     <string name="title_activity_groceries">GroceriesActivity</string>
+
+    <string-array name="Items">
+        <item>Apple</item>
+        <item>Orange</item>
+        <item>Watermelon</item>
+        <item>Tomato</item>
+        <item>Kiwi</item>
+        <item>Ham</item>
+        <item>Bread</item>
+        <item>Milk</item>
+        <item>Eggs</item>
+        <item>Bacon</item>
+        <item>Cheese</item>
+        <item>Tea</item>
+        <item>Juice</item>
+    </string-array>
+
 </resources>
