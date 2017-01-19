@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">CKL App - Replica</string>
+    <string name="title_activity_groceries">Groceries Activity</string>
+
+    <!--Login strings-->
     <string name="email">Email</string>
     <string name="arroba_ckl_io">\@ckl.io</string>
     <string name="password">Password</string>
@@ -8,10 +11,17 @@
     <string name="wrong_login">Error, wrong login</string>
     <string name="wrong_pass">Error, wrong password</string>
     <string name="no_user_registered">No users registered</string>
-    <string name="title_activity_groceries">GroceriesActivity</string>
+
+    <!--Popup menu strings-->
     <string name="change_to_buy">Change to Buy</string>
     <string name="change_to_purchased">Change to Purchased</string>
     <string name="remove_item">Remove Item</string>
+
+    <!--Edit Text strings-->
+    <string name="radio_buy">Buy</string>
+    <string name="radio_purchased">Purchased</string>
+    <string name="description">Description</string>
+    <string name="add_picture">ADD PICTURE</string>
 
     <string-array name="Items">
         <item>Apple</item>

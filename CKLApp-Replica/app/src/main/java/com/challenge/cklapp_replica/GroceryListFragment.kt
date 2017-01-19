@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.content_groceries.view.*
+import kotlinx.android.synthetic.main.groceries_list.view.*
 import java.util.*
 
 /**
@@ -34,11 +36,22 @@ class GroceryListFragment() : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val view = inflater!!.inflate(R.layout.groceries_list, container, false)
-        val recyclerView =view.findViewById(R.id.recycler_view) as RecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = GroceryListAdapter(activity, mGroceryList)
-        return recyclerView
+        //val recyclerView =view.findViewById(R.id.recycler_view) as RecyclerView
+
+        view?.fab?.setOnClickListener {
+            var inter = context as Interface
+            inter.onFloatingButtonClicked()
+        }
+
+        view.recycler_view.layoutManager = LinearLayoutManager(activity)
+        view.recycler_view.adapter = GroceryListAdapter(activity, mGroceryList)
+        //recyclerView.layoutManager = LinearLayoutManager(activity)
+        //recyclerView.adapter = GroceryListAdapter(activity, mGroceryList)
+        return view
     }
 
+    interface Interface {
+        fun onFloatingButtonClicked()
+    }
 
 }

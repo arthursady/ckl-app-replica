@@ -12,21 +12,28 @@ import android.widget.Toast
 import io.realm.Realm
 import java.util.*
 
-class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface {
+class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,GroceryListFragment.Interface,EditItemFragment.Interface {
 
     lateinit var mListFragment : GroceryListFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_groceries)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
-        setSupportActionBar(toolbar)
+//        val toolbar = findViewById(R.id.toolbar_groceries_act) as Toolbar
+//        setSupportActionBar(toolbar)
 
-        val fab = findViewById(R.id.fab) as FloatingActionButton
-        fab.setOnClickListener(View.OnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        })
+//        val fab = findViewById(R.id.fab) as FloatingActionButton
+//        fab.setOnClickListener(View.OnClickListener { view ->
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                    .setAction("Action", null).show()
+//            val editItemFragment = EditItemFragment()
+//
+//            supportFragmentManager
+//                    .beginTransaction()
+//                    .replace(R.id.content_groceries,editItemFragment,"articleDetails")
+//                    .addToBackStack(null)
+//                    .commit()
+//        })
 
         Realm.init(this)
         var realm : Realm = Realm.getDefaultInstance()
@@ -108,6 +115,20 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface {
 
     /*Implements the Long click listener from the ArticleAdapter interface*/
     override fun onArticleSelected(item: Item, view: View, context: Context) {
+
+    }
+
+    override fun onFloatingButtonClicked() {
+        val editItemFragment = EditItemFragment()
+
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.content_groceries,editItemFragment,"articleDetails")
+                    .addToBackStack(null)
+                    .commit()
+    }
+
+    override fun onDoneClicked(name:String,status:Boolean) {
 
     }
 

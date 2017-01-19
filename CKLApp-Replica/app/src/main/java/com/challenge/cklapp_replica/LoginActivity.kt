@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
             realm.commitTransaction()
         }
 
-        loginFragment = LoginFragment().newInstance()
+        loginFragment = LoginFragment()
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.login_view,loginFragment,"login_fragment")

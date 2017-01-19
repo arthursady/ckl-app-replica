@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/edit_toolbar"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:layout_height="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize">
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/edit_done"
+            android:padding="8dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/ic_check"
+            android:layout_gravity="right|center_vertical"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+
+                <RadioGroup
+                    android:id="@+id/button_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="40dp"
+                    android:weightSum="2"
+                    android:gravity="center">
+
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/radio_buy"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:text="@string/radio_buy"
+                        android:theme="@style/CustomStyledRadioButton"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:layout_weight="1" />
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/radio_purchased"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:text="@string/radio_purchased"
+                        android:theme="@style/CustomStyledRadioButton"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:layout_weight="1" />
+                </RadioGroup>
+
+                <TextView android:id="@+id/small_hint_title"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:textColor="@color/warm_purple"
+                    android:textSize="10sp"
+                    android:fontFamily="sans-serif" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textStyle="bold"
+                        android:textColor="@color/warm_purple"
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginRight="5dp" />
+
+                    <EditText
+                        android:id="@+id/edit_item_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:maxLines="1"
+                        android:hint="Item"
+                        android:inputType="text"
+                        android:background="@null" />
+
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        android:id="@+id/item_underline"
+                        android:layout_width="fill_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/grey"/>
+
+                    <TextView android:id="@+id/password_error_text"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="17dp"
+                        android:textColor="@color/warm_purple"
+                        android:textSize="10sp"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginBottom="20dp"/>
+
+                </LinearLayout>
+
+                <TextView android:id="@+id/small_hint_description"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:textColor="@color/warm_purple"
+                    android:textSize="10sp"
+                    android:fontFamily="sans-serif" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/edit_item_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:maxLines="1"
+                        android:hint="@string/description"
+                        android:layout_marginLeft="20dp"
+                        android:inputType="text"
+                        android:background="@null" />
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/description_underline"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/grey"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details_image"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+        android:layout_width="320dp"
+        android:layout_height="44dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:text="@string/add_picture"
+        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/small_radius_round_corner_button_bsgrey" />
+
+    </RelativeLayout>
+</LinearLayout>

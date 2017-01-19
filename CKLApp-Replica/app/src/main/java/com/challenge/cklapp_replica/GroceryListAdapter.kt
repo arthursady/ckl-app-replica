@@ -66,7 +66,6 @@ class GroceryListAdapter() : RecyclerView.Adapter<GroceryListAdapter.ViewHolder>
             mListener.onArticleSelected(mArticleList[holder.adapterPosition], v, mContext)
             true
         }*/
-
     }
 
     override fun getItemViewType(position: Int): Int {

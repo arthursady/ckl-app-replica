@@ -11,6 +11,7 @@
         android:layout_height="106dp"
         android:layout_marginTop="114dp"
         android:layout_gravity="center"
+        android:background="@drawable/ckl_logo"
         android:id="@+id/login_cklLogo" />
 
     <TextView
@@ -32,6 +33,7 @@
             android:id="@+id/login_logo"
             android:layout_width="22dp"
             android:layout_height="22dp"
+            android:background="@drawable/ic_login_username"
             android:layout_marginLeft="17dp"
             android:layout_marginRight="5dp" />
 
@@ -94,6 +96,7 @@
             android:id="@+id/password_logo"
             android:layout_width="22dp"
             android:layout_height="22dp"
+            android:background="@drawable/ic_login_password"
             android:layout_marginLeft="17dp"
             android:layout_marginRight="5dp" />
 

@@ -18,25 +18,12 @@ import io.realm.Realm
 /**
  * Created by Arthur on 12/01/2017.
  */
-class LoginFragment : Fragment() {
-
-    fun newInstance() : LoginFragment{
-        return this
-    }
+class LoginFragment() : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         val loginView:View = inflater!!.inflate(R.layout.activity_login,container,false)
-
-        loginView.login_cklLogo.setImageResource(context.resources
-                .getIdentifier("ckl_logo","drawable", context.packageName))
-
-        loginView.login_logo.setImageResource(context.resources
-                .getIdentifier("login_image","drawable", context.packageName))
-
-        loginView.password_logo.setImageResource(context.resources
-                .getIdentifier("password_logo","drawable",context.packageName))
 
         loginView.edit_login.setOnFocusChangeListener { view, b ->
             checkSignInStatus(loginView)

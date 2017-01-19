@@ -3,8 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="white">#c0c0c0</color>
+    <color name="grey">#c0c0c0</color>
+    <color name="white">#ffffff</color>
     <color name="warm_purple">#a53779</color>
+    <color name="silver">#d7dddf</color>
     <color name="mid_blue">#227ea3</color>
     <color name="scarlet">#d0011b</color>
+    <color name="battleship_grey">#607780</color>
+    <color name="bluish">#2995c0</color>
 </resources>
