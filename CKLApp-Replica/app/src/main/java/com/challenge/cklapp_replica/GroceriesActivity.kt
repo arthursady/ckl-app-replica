@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.Toast
 import io.realm.Realm
+import kotlinx.android.synthetic.main.groceries_list.*
 import java.util.*
 
 class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,GroceryListFragment.Interface,EditItemFragment.Interface {
@@ -37,22 +38,8 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,Groce
 
         Realm.init(this)
         var realm : Realm = Realm.getDefaultInstance()
-        if(!(realm.where(Item::class.java).findAll().size>0))
-        {
-            var itemList : ArrayList<Item> = ArrayList()
-            val groceries = resources.getStringArray(R.array.Items)
-
-            for(i in groceries.indices){
-                itemList.add(Item())
-                itemList[i].setName(groceries[i])
-                realm.beginTransaction()
-                realm.copyToRealmOrUpdate(itemList[i])
-                realm.commitTransaction()
-            }
-
-        }
-
         var dbList = ArrayList<Item>()
+
         dbList.addAll(realm.where(Item::class.java).findAll()
                 .subList(0,realm.where(Item::class.java).findAll().size))
 
@@ -78,8 +65,6 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,Groce
 
         var realm = Realm.getDefaultInstance()
 
-
-
         popup.setOnMenuItemClickListener { i  ->
             when(i.itemId){
                 R.id.change_to_buy -> {
@@ -99,6 +84,11 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,Groce
 
                 R.id.remove_item -> {
                     Toast.makeText(context, "You clicked: "+i.title, Toast.LENGTH_SHORT ).show()
+                    realm.beginTransaction()
+                    var results = realm.where(Item::class.java).equalTo("name",item.getName())
+                            .findFirst()
+                    results.deleteFromRealm()
+                    realm.commitTransaction()
                 }
             }
 
@@ -129,7 +119,32 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,Groce
     }
 
     override fun onDoneClicked(name:String,status:Boolean) {
+        var realm = Realm.getDefaultInstance()
 
+        val exists = realm.where(Item::class.java).equalTo("name",name).findFirst()
+
+        if(exists!=null){
+            realm.beginTransaction()
+            exists.setState(status)
+            realm.copyToRealmOrUpdate(exists)
+            realm.commitTransaction()
+            realm.close()
+
+        }
+        else{
+            var dbList = ArrayList<Item>()
+            dbList.addAll(realm.where(Item::class.java).findAll()
+                    .subList(0,realm.where(Item::class.java).findAll().size))
+
+            var item : Item = Item()
+            item.setName(name)
+            item.setState(status)
+            dbList.add(item)
+            realm.beginTransaction()
+            realm.copyToRealmOrUpdate(dbList)
+            realm.commitTransaction()
+            realm.close()
+        }
+        onBackPressed()
     }
-
 }

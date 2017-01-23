@@ -12,6 +12,7 @@ import android.view.*
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_groceries.*
 import kotlinx.android.synthetic.main.edit_item.*
+import kotlinx.android.synthetic.main.list_element.view.*
 
 
 /**
@@ -53,8 +54,27 @@ class EditItemFragment():Fragment() {
         val listener = context as Interface
 
         editView.edit_toolbar.edit_done.setOnClickListener {
+            if(editView.edit_item_title.text.isEmpty())
+            {
 
-            //listener.onDoneClicked()
+            }
+            else{
+                var buyStatus : Boolean
+                when(editView.button_group.checkedRadioButtonId) {
+                    editView.radio_buy.id ->{
+                        listener.onDoneClicked(editView.edit_item_title.text.toString(),
+                                false)
+                    }
+                    editView.radio_purchased.id ->{
+                        listener.onDoneClicked(editView.edit_item_title.text.toString(),
+                                true)
+                    }
+                    else->{
+
+                    }
+                }
+            }
+
         }
 
 

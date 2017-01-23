@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.realm.Realm
 import kotlinx.android.synthetic.main.content_groceries.view.*
+import kotlinx.android.synthetic.main.groceries_list.*
 import kotlinx.android.synthetic.main.groceries_list.view.*
 import java.util.*
 
@@ -45,9 +47,21 @@ class GroceryListFragment() : Fragment() {
 
         view.recycler_view.layoutManager = LinearLayoutManager(activity)
         view.recycler_view.adapter = GroceryListAdapter(activity, mGroceryList)
-        //recyclerView.layoutManager = LinearLayoutManager(activity)
-        //recyclerView.adapter = GroceryListAdapter(activity, mGroceryList)
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Realm.init(activity)
+        var realm = Realm.getDefaultInstance()
+        val dbList = realm.where(Item::class.java).findAll()
+        if(dbList.size != mGroceryList.size){
+            mGroceryList.clear()
+            mGroceryList.addAll(realm.where(Item::class.java).findAll()
+                    .subList(0,realm.where(Item::class.java).findAll().size))
+        }
+        recycler_view.adapter.notifyDataSetChanged()
+        realm.close()
     }
 
     interface Interface {

@@ -81,7 +81,6 @@ class GroceryListAdapter() : RecyclerView.Adapter<GroceryListAdapter.ViewHolder>
         return mGroceryList.size
     }
 
-
     interface Interface {
         fun onElementMenuClicked(item: Item,view: View,context: Context)
         fun onArticleSelected(item: Item,view: View,context: Context)
