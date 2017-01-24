@@ -1,5 +1,6 @@
 package com.challenge.cklapp_replica
 
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.os.Bundle
 import kotlinx.android.synthetic.main.edit_item.view.*
@@ -9,6 +10,7 @@ import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_groceries.*
 import kotlinx.android.synthetic.main.edit_item.*
@@ -60,12 +62,21 @@ class EditItemFragment():Fragment() {
             }
             else{
                 var buyStatus : Boolean
+                val inputManager = context
+                        .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
                 when(editView.button_group.checkedRadioButtonId) {
                     editView.radio_buy.id ->{
+                        inputManager.hideSoftInputFromWindow(editView.windowToken,
+                                InputMethodManager.HIDE_NOT_ALWAYS)
+
                         listener.onDoneClicked(editView.edit_item_title.text.toString(),
                                 false)
                     }
                     editView.radio_purchased.id ->{
+                        inputManager.hideSoftInputFromWindow(editView.windowToken,
+                                InputMethodManager.HIDE_NOT_ALWAYS)
+
                         listener.onDoneClicked(editView.edit_item_title.text.toString(),
                                 true)
                     }
@@ -76,8 +87,6 @@ class EditItemFragment():Fragment() {
             }
 
         }
-
-
 
         return editView
     }

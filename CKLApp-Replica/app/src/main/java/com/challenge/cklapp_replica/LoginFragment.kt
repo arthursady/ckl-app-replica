@@ -2,9 +2,11 @@ package com.challenge.cklapp_replica
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,10 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import io.realm.Realm
+import android.opengl.ETC1.getHeight
+import android.view.ViewTreeObserver
+
+
 
 
 /**
@@ -23,22 +29,41 @@ class LoginFragment() : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+        //Inflates the login layout for the fragment.
         val loginView:View = inflater!!.inflate(R.layout.activity_login,container,false)
 
+        //Every time the focus on the view changes it checks to see if the user filled the
+        //login and password spaces
         loginView.edit_login.setOnFocusChangeListener { view, b ->
             checkSignInStatus(loginView)
         }
 
+        //Performs an initial check to be sure the button is disabled at first.
         checkSignInStatus(loginView)
 
+        loginView.viewTreeObserver.addOnGlobalLayoutListener {
+            checkSignInStatus(loginView)
+//            val r = Rect()
+//            //r will be populated with the coordinates of your view that area still visible.
+//            loginView.getWindowVisibleDisplayFrame(r)
+//
+//            val heightDiff = loginView.rootView.height - (r.bottom - r.top)
+//            if (heightDiff > 500) { // if more than 100 pixels, its probably a keyboard...
+//
+//            }
+        }
+
+
+        //When the done button is pressed forces the focus to be cleared from the password field
+        //and hides the softkeyboard.
         loginView.edit_password.setOnEditorActionListener { textView, i, keyEvent ->
+            val inputManager = context
+                    .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
             when(i) {
-                EditorInfo.IME_ACTION_DONE -> {
 
+                EditorInfo.IME_ACTION_DONE   -> {
                     loginView.clearFocus()
-                    val inputManager = context
-                            .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
                     inputManager.hideSoftInputFromWindow(loginView.windowToken,
                             InputMethodManager.HIDE_NOT_ALWAYS)
                 }
@@ -83,7 +108,6 @@ class LoginFragment() : Fragment() {
                         .getColor(context, R.color.warm_purple))
             }
         }
-
         return loginView
     }
 
@@ -99,4 +123,6 @@ class LoginFragment() : Fragment() {
             loginView.sign_in_button.isEnabled = false
         }
     }
+
+
 }

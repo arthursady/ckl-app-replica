@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import io.realm.Realm
 import kotlinx.android.synthetic.main.groceries_list.*
+import kotlinx.android.synthetic.main.main_login.*
 import java.util.*
 
 class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,GroceryListFragment.Interface,EditItemFragment.Interface {
@@ -145,6 +147,7 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,Groce
             realm.commitTransaction()
             realm.close()
         }
+
         onBackPressed()
     }
 }
