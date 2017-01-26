@@ -20,6 +20,7 @@ import java.util.*
 class GroceryListFragment() : Fragment() {
     lateinit private var mGroceryList: ArrayList<Item>
 
+    var mRemoveItem : String? = null
     fun newInstance(items: ArrayList<Item>): GroceryListFragment{
         this.setGroceryList(items)
         return this
@@ -31,6 +32,7 @@ class GroceryListFragment() : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Realm.init(activity)
         setHasOptionsMenu(true)
     }
 
@@ -50,10 +52,14 @@ class GroceryListFragment() : Fragment() {
         return view
     }
 
+    override fun onPause() {
+        super.onPause()
+        mGroceryList.clear()
+    }
+
     override fun onResume() {
         super.onResume()
-        Realm.init(activity)
-        var realm = Realm.getDefaultInstance()
+        val realm = Realm.getDefaultInstance()
         val dbList = realm.where(Item::class.java).findAll()
         if(dbList.size != mGroceryList.size){
             mGroceryList.clear()
@@ -62,10 +68,10 @@ class GroceryListFragment() : Fragment() {
         }
         recycler_view.adapter.notifyDataSetChanged()
         realm.close()
+        mRemoveItem = null
     }
 
     interface Interface {
         fun onFloatingButtonClicked()
     }
-
 }

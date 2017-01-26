@@ -7,10 +7,12 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.Toolbar
+import android.text.SpannableStringBuilder
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import io.realm.Realm
+import kotlinx.android.synthetic.main.edit_item.*
 import kotlinx.android.synthetic.main.groceries_list.*
 import kotlinx.android.synthetic.main.main_login.*
 import java.util.*
@@ -72,7 +74,7 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,Groce
                 R.id.change_to_buy -> {
                     Toast.makeText(context, "You clicked: "+i.title, Toast.LENGTH_SHORT ).show()
                     realm.beginTransaction()
-                    item.setState(false)
+                    item.state=false
                     realm.commitTransaction()
                 }
 
@@ -80,14 +82,14 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,Groce
                 R.id.change_to_purchased -> {
                     Toast.makeText(context, "You clicked: "+i.title, Toast.LENGTH_SHORT ).show()
                     realm.beginTransaction()
-                    item.setState(true)
+                    item.state = true
                     realm.commitTransaction()
                 }
 
                 R.id.remove_item -> {
                     Toast.makeText(context, "You clicked: "+i.title, Toast.LENGTH_SHORT ).show()
                     realm.beginTransaction()
-                    var results = realm.where(Item::class.java).equalTo("name",item.getName())
+                    var results = realm.where(Item::class.java).equalTo("name",item.name)
                             .findFirst()
                     results.deleteFromRealm()
                     realm.commitTransaction()
@@ -106,7 +108,7 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,Groce
     }
 
     /*Implements the Long click listener from the ArticleAdapter interface*/
-    override fun onArticleSelected(item: Item, view: View, context: Context) {
+    override fun onItemSelected(item: Item, view: View, context: Context) {
 
     }
 
@@ -120,34 +122,52 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,Groce
                     .commit()
     }
 
-    override fun onDoneClicked(name:String,status:Boolean) {
-        var realm = Realm.getDefaultInstance()
+    override fun onDoneClicked(newItem:Item?,oldItem:Item?) {
+//        val realm = Realm.getDefaultInstance()
+        //If newItem and oldItem are not null, then deletes the oldItem and exchange it by the new
+//        if((newItem!=null)&&(oldItem!=null)){
+//            mListFragment.removeItem(oldItem.name)
+//        }
+        //If newItem is null, then just modifies the oldItem values
+//        else if((newItem==null)&&(oldItem!=null)){
+//            val exists = realm.where(Item::class.java).equalTo("name",oldItem.name).findFirst()
+//            realm.beginTransaction()
+//            exists.state = oldItem.state
+//            exists.description = oldItem.description
+//            realm.copyToRealmOrUpdate(exists)
+//            realm.commitTransaction()
+//            realm.close()
+//        }
+//        //If oldItem is null then just creates a new item
+//        else if((newItem!=null)&&(oldItem==null)){
+//            var dbList = ArrayList<Item>()
+//            dbList.addAll(realm.where(Item::class.java).findAll()
+//                    .subList(0,realm.where(Item::class.java).findAll().size))
+//
+//            dbList.add(newItem)
+//            realm.beginTransaction()
+//            realm.copyToRealmOrUpdate(dbList)
+//            realm.commitTransaction()
+//            realm.close()
+//        }
 
-        val exists = realm.where(Item::class.java).equalTo("name",name).findFirst()
+//        onBackPressed()
+    }
 
-        if(exists!=null){
-            realm.beginTransaction()
-            exists.setState(status)
-            realm.copyToRealmOrUpdate(exists)
-            realm.commitTransaction()
-            realm.close()
+    override fun onItemClicked(item: Item) {
+        val editItemFragment = EditItemFragment()
 
-        }
-        else{
-            var dbList = ArrayList<Item>()
-            dbList.addAll(realm.where(Item::class.java).findAll()
-                    .subList(0,realm.where(Item::class.java).findAll().size))
+        //Creates a copy of the item in order to be possible to operate with the db removal
+        //operations in the activity and fragment
 
-            var item : Item = Item()
-            item.setName(name)
-            item.setState(status)
-            dbList.add(item)
-            realm.beginTransaction()
-            realm.copyToRealmOrUpdate(dbList)
-            realm.commitTransaction()
-            realm.close()
-        }
+        editItemFragment.showExistingItem(item)
 
-        onBackPressed()
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.content_groceries,editItemFragment,"editItem")
+                .addToBackStack(null)
+                .commit()
+
+
     }
 }

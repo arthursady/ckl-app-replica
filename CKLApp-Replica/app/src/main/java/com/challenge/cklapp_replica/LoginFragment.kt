@@ -41,16 +41,10 @@ class LoginFragment() : Fragment() {
         //Performs an initial check to be sure the button is disabled at first.
         checkSignInStatus(loginView)
 
+        //Uses the viewTreeObserver to catch softKeyboard show/hide actions and check the
+        //signIn status and enable/disable the button correctly.
         loginView.viewTreeObserver.addOnGlobalLayoutListener {
             checkSignInStatus(loginView)
-//            val r = Rect()
-//            //r will be populated with the coordinates of your view that area still visible.
-//            loginView.getWindowVisibleDisplayFrame(r)
-//
-//            val heightDiff = loginView.rootView.height - (r.bottom - r.top)
-//            if (heightDiff > 500) { // if more than 100 pixels, its probably a keyboard...
-//
-//            }
         }
 
 
@@ -72,10 +66,15 @@ class LoginFragment() : Fragment() {
             true
         }
 
+        //Set the listener fot the login button.
         loginView.sign_in_button.setOnClickListener {
             val realm : Realm = Realm.getDefaultInstance()
             val dbUsers = realm.where(User::class.java).findAll()
+
+            //If there is no register user in the db sets an error message
             if(dbUsers.size>0){
+
+                //Checks if the specific user is in the db, if not sets an error message
                 if (realm.where(User::class.java).equalTo("login",
                         loginView.edit_login.text.toString()).findFirst() == null) {
 
@@ -83,8 +82,9 @@ class LoginFragment() : Fragment() {
                             .getColor(context, R.color.warm_purple))
                         loginView.login_error_text.text=resources.getString(R.string.wrong_login)
                 }
-                else {
 
+                    //When the user is in the db, checks the password and if its correct login
+                else {
 
                     if(realm.where(User::class.java).equalTo("login", loginView.edit_login.text
                             .toString()).findFirst().getPassword()
@@ -111,6 +111,7 @@ class LoginFragment() : Fragment() {
         return loginView
     }
 
+    //Checks the signin status and changes the button accordingly.
     fun checkSignInStatus(loginView:View){
         if(!(loginView.edit_login.text.isEmpty())&& !(loginView.edit_password.text.isEmpty())) {
             loginView.sign_in_button.background = ContextCompat

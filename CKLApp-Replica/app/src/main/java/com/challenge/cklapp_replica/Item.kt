@@ -12,19 +12,27 @@ import io.realm.annotations.RealmClass
 open class Item() : RealmObject() {
 
     @PrimaryKey
-    lateinit private var name : String
-    private var state : Boolean = false
+    lateinit var name : String
+    var state : Boolean = false
+    var description : String = ""
 
-    open fun setName(itemName : String){
-        name=itemName
-    }
-    open fun setState(inputState : Boolean){
-        state=inputState
-    }
-    open fun getName():String{
-        return name
-    }
-    open fun getState():Boolean{
-        return state
-    }
+//    open fun setName(itemName : String){
+//        name=itemName
+//    }
+//    open fun setState(inputState : Boolean){
+//        state=inputState
+//    }
+//    open fun setDescription(itemDescription : String){
+//        description=itemDescription
+//    }
+
+//    open fun getName():String{
+//        return name
+//    }
+//    open fun getState():Boolean{
+//        return state
+//    }
+//    open fun getDescription():String{
+//        return name
+//    }
 }

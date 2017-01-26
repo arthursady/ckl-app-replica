@@ -33,7 +33,7 @@ class GroceryListAdapter() : RecyclerView.Adapter<GroceryListAdapter.ViewHolder>
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
         /*Set the data inside the views of the list fragment*/
         fun setData(item:Item){
-            itemView.name.text=item.getName()
+            itemView.name.text=item.name
 //            itemView.list_element_menu.setOnClickListener {
 //                Toast.makeText(mContext, "QUE BUGADO", Toast.LENGTH_LONG)
 //                        .show()
@@ -61,6 +61,10 @@ class GroceryListAdapter() : RecyclerView.Adapter<GroceryListAdapter.ViewHolder>
         holder?.itemView?.list_element_menu?.setOnClickListener { v->
             mListener.onElementMenuClicked(mGroceryList[holder.adapterPosition],v,mContext)
         }
+
+        holder?.itemView?.setOnClickListener {
+            mListener.onItemClicked(mGroceryList[holder.adapterPosition])
+        }
         /*
         holder?.itemView?.setOnLongClickListener{ v ->
             mListener.onArticleSelected(mArticleList[holder.adapterPosition], v, mContext)
@@ -69,7 +73,7 @@ class GroceryListAdapter() : RecyclerView.Adapter<GroceryListAdapter.ViewHolder>
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(mGroceryList[position].getState()){
+        if(mGroceryList[position].state){
             return PURCHASED
         }
         else{
@@ -83,6 +87,7 @@ class GroceryListAdapter() : RecyclerView.Adapter<GroceryListAdapter.ViewHolder>
 
     interface Interface {
         fun onElementMenuClicked(item: Item,view: View,context: Context)
-        fun onArticleSelected(item: Item,view: View,context: Context)
+        fun onItemSelected(item: Item,view: View,context: Context)
+        fun onItemClicked(item : Item)
     }
 }
