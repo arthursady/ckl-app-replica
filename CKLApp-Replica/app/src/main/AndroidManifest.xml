@@ -20,9 +20,11 @@
         <activity
             android:name=".GroceriesActivity"
             android:label="@string/title_activity_groceries"
+            android:permission="android.permission.READ_EXTERNAL_STORAGE"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
         </activity>
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

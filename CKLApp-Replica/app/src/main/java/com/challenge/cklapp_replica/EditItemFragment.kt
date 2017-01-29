@@ -1,24 +1,25 @@
 package com.challenge.cklapp_replica
 
 import android.content.Context
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.os.Bundle
 import kotlinx.android.synthetic.main.edit_item.view.*
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.Toolbar
-import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import io.realm.Realm
-import kotlinx.android.synthetic.main.activity_groceries.*
 import kotlinx.android.synthetic.main.edit_item.*
-import kotlinx.android.synthetic.main.list_element.view.*
 import java.util.*
+import android.graphics.BitmapFactory
+import android.graphics.Bitmap
+import android.app.Activity.RESULT_OK
+import java.io.FileNotFoundException
+import android.util.DisplayMetrics
+import java.io.ByteArrayOutputStream
 
 
 /**
@@ -28,7 +29,7 @@ class EditItemFragment():Fragment() {
 
     var mItem : Item? = null
     var mRemoveItem : Boolean = false
-
+    var mByteImage : ByteArray? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,18 @@ class EditItemFragment():Fragment() {
             //if there is a description set it too
             if(!(mItem!!.description.isEmpty())){
                 editView.edit_item_description?.text = SpannableStringBuilder(mItem!!.description)
+            }
+
+            if(mItem!!.imageByteArray != null){
+               val bitmap = BitmapFactory.decodeByteArray(mItem!!.imageByteArray,
+                        0,
+                        mItem?.imageByteArray!!.size)
+
+                editView.details_image.setImageBitmap(bitmap)
+                editView.remove_picture.visibility = View.VISIBLE
+                editView.remove_picture.isEnabled = true
+                editView.add_img.visibility = View.INVISIBLE
+                editView.add_img.isEnabled = false
             }
 
             //Defines which radio button is checked and set the according background.
@@ -103,7 +116,7 @@ class EditItemFragment():Fragment() {
             //If the title is empty, prevents further action
             if(editView.edit_item_title.text.isEmpty())
             {
-
+                Toast.makeText(context,"Field \"Item\" is mandatory",Toast.LENGTH_SHORT).show()
             }
             else{
                 //if the item already exists check if the title was altered and if not proceeds
@@ -114,6 +127,7 @@ class EditItemFragment():Fragment() {
                         realm.beginTransaction()
                         mItem!!.state=getStatus(editView)
                         mItem!!.description=editView.edit_item_description.text.toString()
+                        mItem!!.imageByteArray = mByteImage
                         realm.copyToRealmOrUpdate(mItem)
                         realm.commitTransaction()
                         realm.close()
@@ -131,6 +145,7 @@ class EditItemFragment():Fragment() {
                             newItem.name = editView.edit_item_title.text.toString()
                             newItem.state = getStatus(editView)
                             newItem.description = editView.edit_item_description.text.toString()
+                            newItem.imageByteArray = mByteImage
                             val dbList = ArrayList<Item>()
                             dbList.addAll(realm.where(Item::class.java).findAll()
                                     .subList(0,realm.where(Item::class.java).findAll().size))
@@ -158,6 +173,7 @@ class EditItemFragment():Fragment() {
                         newItem.name = editView.edit_item_title.text.toString()
                         newItem.state = getStatus(editView)
                         newItem.description = editView.edit_item_description.text.toString()
+                        newItem.imageByteArray = mByteImage
 
                         val dbList = ArrayList<Item>()
                         dbList.addAll(realm.where(Item::class.java).findAll()
@@ -172,12 +188,70 @@ class EditItemFragment():Fragment() {
                         closeKeyboard(editView)
                     }
                 }
+                activity.onBackPressed()
             }
-            activity.onBackPressed()
         }
+
+        editView.add_img.setOnClickListener {
+
+            editView.remove_picture.visibility = View.VISIBLE
+            editView.remove_picture.isEnabled = true
+            val intent : Intent = Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent,0)
+        }
+
+        editView.remove_picture.setOnClickListener {
+            add_img.visibility = View.VISIBLE
+            add_img.isEnabled = true
+
+            remove_picture.visibility = View.INVISIBLE
+            remove_picture.isEnabled = false
+
+            details_image.setImageResource(0)
+            mByteImage = null
+        }
+
         return editView
     }
 
+    //Gets the image chosen in the phone gallery and draws it in the correct image view.
+    //It also re-scales the image size to fit the device screen correctly
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+
+        if (resultCode === RESULT_OK) {
+            val targetUri = data?.data
+            val bitmap: Bitmap
+            try {
+                bitmap = BitmapFactory.decodeStream(activity.contentResolver
+                        .openInputStream(targetUri))
+
+                val metrics : DisplayMetrics = DisplayMetrics()
+                val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                wm.defaultDisplay.getMetrics(metrics)
+
+                val scaleFactor = metrics.widthPixels/bitmap.width
+                val bitmapScaled = Bitmap.createScaledBitmap(bitmap,metrics.widthPixels,
+                        bitmap.height*scaleFactor, true)
+
+                mByteImage = bitmapToByte(bitmapScaled)
+                 //BitmapFactory.decodeByteArray(byte,0,byte.size)
+
+                details_image.setImageBitmap(bitmapScaled)
+                add_img.visibility = View.INVISIBLE
+                add_img.isEnabled = false
+
+            } catch (e: FileNotFoundException) {
+                // TODO Auto-generated catch block
+                e.printStackTrace()
+            }
+        }
+    }
+
+    //Realm can't edit primary keys therefore if the item title is edited the old Item has to
+    //be deleted from the database.
     override fun onDestroy() {
         super.onDestroy()
         val realm = Realm.getDefaultInstance()
@@ -189,15 +263,12 @@ class EditItemFragment():Fragment() {
         }
     }
 
-
-    interface Interface{
-        fun onDoneClicked(newItem:Item? , oldItem:Item?)
-    }
-
+    //Sets the mItem variable in case the fragment has to open an existing item for editing
     fun showExistingItem(item:Item){
        mItem = item
     }
 
+    //Closes the softKeyboard
     fun closeKeyboard(eView: View){
         val inputManager = context
                 .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -205,6 +276,8 @@ class EditItemFragment():Fragment() {
                 InputMethodManager.HIDE_NOT_ALWAYS)
     }
 
+    //Gets which radio button is selected and returns their meaning, "false" -> buy and
+    // "true"-> purchased
     fun getStatus(eView: View): Boolean{
         when(eView?.button_group.checkedRadioButtonId) {
             eView.radio_purchased.id -> {
@@ -214,6 +287,12 @@ class EditItemFragment():Fragment() {
                 return false
             }
         }
+    }
+
+    fun bitmapToByte(bitmap: Bitmap):ByteArray{
+        var stream : ByteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream)
+        return stream.toByteArray()
     }
 
 }

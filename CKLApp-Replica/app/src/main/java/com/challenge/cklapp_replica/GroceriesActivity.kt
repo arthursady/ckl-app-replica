@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.groceries_list.*
 import kotlinx.android.synthetic.main.main_login.*
 import java.util.*
 
-class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,GroceryListFragment.Interface,EditItemFragment.Interface {
+class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,GroceryListFragment.Interface {
 
     lateinit var mListFragment : GroceryListFragment
 
@@ -102,8 +102,6 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,Groce
             true
         }
 
-
-
         realm.close()
     }
 
@@ -120,38 +118,6 @@ class GroceriesActivity : AppCompatActivity(),GroceryListAdapter.Interface,Groce
                     .replace(R.id.content_groceries,editItemFragment,"articleDetails")
                     .addToBackStack(null)
                     .commit()
-    }
-
-    override fun onDoneClicked(newItem:Item?,oldItem:Item?) {
-//        val realm = Realm.getDefaultInstance()
-        //If newItem and oldItem are not null, then deletes the oldItem and exchange it by the new
-//        if((newItem!=null)&&(oldItem!=null)){
-//            mListFragment.removeItem(oldItem.name)
-//        }
-        //If newItem is null, then just modifies the oldItem values
-//        else if((newItem==null)&&(oldItem!=null)){
-//            val exists = realm.where(Item::class.java).equalTo("name",oldItem.name).findFirst()
-//            realm.beginTransaction()
-//            exists.state = oldItem.state
-//            exists.description = oldItem.description
-//            realm.copyToRealmOrUpdate(exists)
-//            realm.commitTransaction()
-//            realm.close()
-//        }
-//        //If oldItem is null then just creates a new item
-//        else if((newItem!=null)&&(oldItem==null)){
-//            var dbList = ArrayList<Item>()
-//            dbList.addAll(realm.where(Item::class.java).findAll()
-//                    .subList(0,realm.where(Item::class.java).findAll().size))
-//
-//            dbList.add(newItem)
-//            realm.beginTransaction()
-//            realm.copyToRealmOrUpdate(dbList)
-//            realm.commitTransaction()
-//            realm.close()
-//        }
-
-//        onBackPressed()
     }
 
     override fun onItemClicked(item: Item) {

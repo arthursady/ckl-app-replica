@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
     <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/edit_toolbar"
@@ -23,9 +21,9 @@
             android:id="@+id/edit_done"
             android:padding="8dp"
             android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/ic_check"
-            android:layout_gravity="right|center_vertical"
-            />
+            android:layout_gravity="end|center_vertical" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -36,8 +34,11 @@
 
 
         <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scroll_edit"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/add_img">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="17dp"
+                    android:layout_marginStart="17dp"
                     android:textColor="@color/warm_purple"
                     android:textSize="10sp"
                     android:fontFamily="sans-serif" />
@@ -100,7 +102,9 @@
                         android:textStyle="bold"
                         android:textColor="@color/warm_purple"
                         android:layout_marginLeft="17dp"
-                        android:layout_marginRight="5dp" />
+                        android:layout_marginStart="17dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"/>
 
                     <EditText
                         android:id="@+id/edit_item_title"
@@ -109,8 +113,10 @@
                         android:textSize="14sp"
                         android:fontFamily="sans-serif-light"
                         android:maxLines="1"
-                        android:hint="Item"
+                        android:hint="@string/item"
                         android:inputType="text"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
                         android:background="@null" />
 
                 </LinearLayout>
@@ -125,13 +131,16 @@
                         android:layout_height="2dp"
                         android:layout_marginTop="2dp"
                         android:layout_marginLeft="17dp"
+                        android:layout_marginStart="17dp"
                         android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
                         android:background="@color/grey"/>
 
                     <TextView android:id="@+id/password_error_text"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="17dp"
+                        android:layout_marginStart="17dp"
                         android:textColor="@color/warm_purple"
                         android:textSize="10sp"
                         android:fontFamily="sans-serif"
@@ -157,10 +166,10 @@
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
                         android:fontFamily="sans-serif-light"
-                        android:maxLines="1"
-                        android:hint="@string/description"
+                        android:hint="@string/note"
                         android:layout_marginLeft="20dp"
-                        android:inputType="text"
+                        android:layout_marginRight="20dp"
+                        android:inputType="textMultiLine"
                         android:background="@null" />
 
                 </LinearLayout>
@@ -172,26 +181,52 @@
                     android:layout_height="2dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginLeft="17dp"
+                    android:layout_marginStart="17dp"
                     android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@color/grey"/>
 
-                <ImageView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/details_image"/>
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="50dp"
+                        android:id="@+id/details_image"/>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/remove_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+                        app:fabSize="mini"
+                        android:visibility="invisible"
+                        app:backgroundTint="@color/battleship_grey" />
+                </RelativeLayout>
             </LinearLayout>
         </ScrollView>
 
         <Button
-        android:layout_width="320dp"
-        android:layout_height="44dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
-        android:text="@string/add_picture"
-        android:fontFamily="sans-serif-medium"
-        android:background="@drawable/small_radius_round_corner_button_bsgrey" />
-
+            android:id="@+id/add_img"
+            android:layout_width="320dp"
+            android:layout_height="44dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="25dp"
+            android:text="@string/add_picture"
+            android:fontFamily="sans-serif-medium"
+            android:background="@drawable/small_radius_round_corner_button_bsgrey" />
     </RelativeLayout>
 </LinearLayout>

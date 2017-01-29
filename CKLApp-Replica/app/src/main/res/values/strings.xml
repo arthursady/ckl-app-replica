@@ -20,23 +20,8 @@
     <!--Edit Text strings-->
     <string name="radio_buy">Buy</string>
     <string name="radio_purchased">Purchased</string>
-    <string name="description">Description</string>
+    <string name="note">Note</string>
     <string name="add_picture">ADD PICTURE</string>
-
-    <string-array name="Items">
-        <item>Apple</item>
-        <item>Orange</item>
-        <item>Watermelon</item>
-        <item>Tomato</item>
-        <item>Kiwi</item>
-        <item>Ham</item>
-        <item>Bread</item>
-        <item>Milk</item>
-        <item>Eggs</item>
-        <item>Bacon</item>
-        <item>Cheese</item>
-        <item>Tea</item>
-        <item>Juice</item>
-    </string-array>
+    <string name="item">Item</string>
 
 </resources>

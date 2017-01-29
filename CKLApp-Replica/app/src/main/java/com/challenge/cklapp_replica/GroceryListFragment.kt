@@ -1,5 +1,6 @@
 package com.challenge.cklapp_replica
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.Nullable
 import android.support.v4.app.Fragment
@@ -46,7 +47,8 @@ class GroceryListFragment() : Fragment() {
             var inter = context as Interface
             inter.onFloatingButtonClicked()
         }
-
+        view.groceries_toolbar.title = "Groceries List"
+        view.groceries_toolbar.setTitleTextColor(Color.WHITE)
         view.recycler_view.layoutManager = LinearLayoutManager(activity)
         view.recycler_view.adapter = GroceryListAdapter(activity, mGroceryList)
         return view

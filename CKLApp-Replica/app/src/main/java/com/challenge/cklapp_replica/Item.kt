@@ -15,6 +15,7 @@ open class Item() : RealmObject() {
     lateinit var name : String
     var state : Boolean = false
     var description : String = ""
+    var imageByteArray : ByteArray? = null
 
 //    open fun setName(itemName : String){
 //        name=itemName
